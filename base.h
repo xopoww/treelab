@@ -115,7 +115,7 @@ public:
 #if defined _DEBUG && _DEBUG > 0
     // node printing is defined in the node class to allow for printing extra
     // data
-    void print() { this->traverse([](Node* n){ n.print(); }); };
+    void print() { this->traverse([](Node* n){ n->print(); }); };
 #endif
 };
 
