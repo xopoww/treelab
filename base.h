@@ -282,6 +282,7 @@ void BaseTree<kT, vT, Node>::delete_at(Node *node)
     if (!this->root->is_valid())
     {
         LOG("!!! TREE IS INVALIDATED, TERMINATING !!!");
+        this->print();
         throw "Invalid tree";
     }
 #endif

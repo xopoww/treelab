@@ -90,6 +90,10 @@ int main()
 
     std::cout << std::endl;
 
+    print(tree);
+
+    std::cout << std::endl;
+
     tree.erase(1);
     std::cout << "1: " << (tree.contains(1) ? "true" : "false") << std::endl;
 
@@ -142,6 +146,14 @@ int main()
 2 : two
 
 3: true
+
+5 : five
+1 : ONE
+4 : four
+7 : seven
+9 : nine
+6 : six
+2 : two
 
 1: false
 
