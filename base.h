@@ -249,6 +249,12 @@ Node* BaseTree<kT, vT, Node>::insert_at(Node *parent, bool right, const std::pai
     LOG("[ MEMORY ] Created Node using new.");
     this->_size++;
     (*dst)->adjust_insert();
+
+    while(this->root->parent != nullptr)
+    {
+        this->root = this->root->parent;
+    }
+
 #if defined _DEBUG && _DEBUG > 0
     if (!this->root->is_valid())
     {
@@ -266,6 +272,12 @@ void BaseTree<kT, vT, Node>::delete_at(Node *node)
     delete node;
     this->_size--;
     LOG("[ MEMORY ] Node deleted.");
+
+    while(this->root->parent != nullptr)
+    {
+        this->root = this->root->parent;
+    }
+
 #if defined _DEBUG && _DEBUG > 0
     if (!this->root->is_valid())
     {
