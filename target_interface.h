@@ -37,4 +37,8 @@ public:
     // Get the depth of the tree.
     // For research purposes.
     virtual std::size_t depth() const = 0;
+
+    // Virtual destructor is needed to be able to properly delete trees even
+    // if we access them only through ptrs to this interface.
+    virtual ~KeyValueTree() {};
 };

@@ -94,6 +94,19 @@ struct SimpleNode
             replacement->right = this->right;
         }
     }
+
+#if defined _DEBUG && _DEBUG > 0
+
+    bool is_valid() const { return true; }
+
+    #include <iostream>
+
+    void print() const
+    {
+        std::cout << this->key << " : " << this->value << std::endl;
+    }
+
+#endif
 };
 
 template <typename kT, typename vT>

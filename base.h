@@ -24,7 +24,12 @@
 //    about to be deleted right before the deletion. This method should make
 //    sure that after the deletion of the node the tree will still be valid and
 //    there will be no memory leak. It also should implement balancing in a
-//    self-balancing tree).
+//    self-balancing tree);
+//  - [debug only] have a method bool is_valid() that tells if a tree is valid;
+//    in debub mode, this method will be called after each call to insert_at / 
+//    delete_at and, it returns false, an exception will be thrown;
+//  - [debug only] have a method void print() to print the value of the node (
+//    possibly with additional data).
 //
 // The SimpleNode class in "simple_tree.h" may serve as a basic example of how
 // to implement Node class.
@@ -107,8 +112,10 @@ public:
 
     std::size_t depth() const override { return this->node_depth(this->root); }
 
-#if _DEBUG > 0
-    void print() { this->traverse([](Node* n){ std::cout << n->key << " : " << n->value << std::endl; }); };
+#if defined _DEBUG && _DEBUG > 0
+    // node printing is defined in the node class to allow for printing extra
+    // data
+    void print() { this->traverse([](Node* n){ n.print(); }); };
 #endif
 };
 
@@ -242,6 +249,13 @@ Node* BaseTree<kT, vT, Node>::insert_at(Node *parent, bool right, const std::pai
     LOG("[ MEMORY ] Created Node using new.");
     this->_size++;
     (*dst)->adjust_insert();
+#if defined _DEBUG && _DEBUG > 0
+    if (!this->root->is_valid())
+    {
+        LOG("!!! TREE IS INVALIDATED, TERMINATING !!!");
+        throw "Invalid tree";
+    }
+#endif
     return *dst;
 }
 
@@ -252,6 +266,13 @@ void BaseTree<kT, vT, Node>::delete_at(Node *node)
     delete node;
     this->_size--;
     LOG("[ MEMORY ] Node deleted.");
+#if defined _DEBUG && _DEBUG > 0
+    if (!this->root->is_valid())
+    {
+        LOG("!!! TREE IS INVALIDATED, TERMINATING !!!");
+        throw "Invalid tree";
+    }
+#endif
 }
 
 template <typename kT, typename vT, class Node>
