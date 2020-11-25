@@ -95,7 +95,7 @@ struct SimpleNode
         }
     }
 
-#if defined _DEBUG && _DEBUG > 0
+#if defined _TREE_DEBUG && _TREE_DEBUG > 0
 
     bool is_valid() const { return true; }
 

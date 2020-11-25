@@ -112,7 +112,7 @@ public:
 
     std::size_t depth() const override { return this->node_depth(this->root); }
 
-#if defined _DEBUG && _DEBUG > 0
+#if defined _TREE_DEBUG && _TREE_DEBUG > 0
     // node printing is defined in the node class to allow for printing extra
     // data
     void print() { this->traverse([](Node* n){ n->print(); }); };
@@ -246,23 +246,28 @@ Node* BaseTree<kT, vT, Node>::insert_at(Node *parent, bool right, const std::pai
     }
 
     *dst = new Node(item, parent);
+    Node* inserted = *dst;
     LOG("[ MEMORY ] Created Node using new.");
     this->_size++;
+    LOGV("dst: " << (*dst)->key);
+    LOGV("dst = " << dst << ", *dst = " << (*dst));
     (*dst)->adjust_insert();
+    LOGV("dst: " << (*dst)->key);
+    LOGV("dst = " << dst << ", *dst = " << (*dst));
 
     while(this->root->parent != nullptr)
     {
         this->root = this->root->parent;
     }
 
-#if defined _DEBUG && _DEBUG > 0
+#if defined _TREE_DEBUG && _TREE_DEBUG > 0
     if (!this->root->is_valid())
     {
         LOG("!!! TREE IS INVALIDATED, TERMINATING !!!");
         throw "Invalid tree";
     }
 #endif
-    return *dst;
+    return inserted;
 }
 
 template <typename kT, typename vT, class Node>
@@ -278,7 +283,7 @@ void BaseTree<kT, vT, Node>::delete_at(Node *node)
         this->root = this->root->parent;
     }
 
-#if defined _DEBUG && _DEBUG > 0
+#if defined _TREE_DEBUG && _TREE_DEBUG > 0
     if (!this->root->is_valid())
     {
         LOG("!!! TREE IS INVALIDATED, TERMINATING !!!");

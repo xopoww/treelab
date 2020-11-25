@@ -1,11 +1,11 @@
 // A simple test of kVTree implementation (without benchmarking).
 
-#define _DEBUG 0 // this macro controls output to the console (see "common.h")
+#define _TREE_DEBUG 0 // this macro controls output to the console (see "common.h")
 
 // Edit these 2 lines to change the type of the tree being tested
 
-#include "simple_tree.h"    // <<<<<
-#define TreeT SimpleTree    // <<<<<
+#include "avltree.h"    // <<<<<
+#define TreeT AVLTree    // <<<<<
 
 
 #include <iostream>
@@ -50,12 +50,19 @@ std::vector<int> nums{5, 1, 4, 7, 9, 6, 2};
 template <typename kT, typename vT>
 void print(TreeT<kT, vT> &tree)
 {
-#if defined _DEBUG && _DEBUG > 0
+#if defined _TREE_DEBUG && _TREE_DEBUG > 0
     tree.print();
 #else
     for (auto n : nums)
     {
-        std::cout << n << " : " << tree[n] << std::endl;
+        if (tree.contains(n))
+        {
+            std::cout << n << " : " << tree[n] << std::endl;
+        }
+    }
+    if (tree.contains(3))
+    {
+        std::cout << "3 : " << tree[3] << std::endl;
     }
 #endif
 }
@@ -85,7 +92,7 @@ int main()
 
     std::cout << std::endl;
 
-    tree[3] = std::string("tree");
+    tree[3] = std::string("three");
     std::cout << "3: " << (tree.contains(3) ? "true" : "false") << std::endl;
 
     std::cout << std::endl;
@@ -123,7 +130,7 @@ int main()
 
 }
 
-// Expected output (with _DEBUG == 0):
+// Expected output (with _TREE_DEBUG == 0):
 
 /*
 5 : five

@@ -2,7 +2,7 @@
 
 // Some macros used throughout the project.
 
-#if defined _DEBUG && _DEBUG > 0
+#if defined _TREE_DEBUG && _TREE_DEBUG > 0
 
     #include <iostream>
 
@@ -18,7 +18,7 @@
 
 #endif
 
-#if defined _DEBUG && _DEBUG > 1
+#if defined _TREE_DEBUG && _TREE_DEBUG > 1
 
     #define LOGV(msg) std::cout << "[ in " << __func__ << " ]: " << msg << std::endl
 
